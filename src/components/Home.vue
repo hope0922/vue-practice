@@ -2,8 +2,7 @@
     <div>
         <section class="head-area">
             <div class="title">
-                <span>超市优选</span>
-                <span v-if="!showSearch">饿了么超市</span>
+                <span>美团外卖</span>
                 <input
                     v-if="showSearch"
                     class="top-search"
@@ -14,27 +13,55 @@
         </section>
         <section class="mt20">
             <div class="search-food">
-                <span class="title-tip">要啥有啥 好货速达</span>
+                <span class="local-tip">{{postion}}></span>
                 <div class="center">
                     <input id="search-input" @focus="gotoSearch" placeholder="输入商家、商品名称" />
                 </div>
             </div>
+            <FoodPartition></FoodPartition>
             <div class="supermarket-card" v-for="(item,index) in foodList" :key="index">321312</div>
         </section>
+        <FootNav></FootNav>
     </div>
 </template>
 <script>
 import { mapState } from "vuex";
+import { getCurrentCity, transformPostion } from "../service/api";
+import FoodPartition from "./FoodPartition";
+import FootNav from "./FootNav";
+import { constants } from "fs";
 export default {
     data() {
         return {
             foodList: [1, 2, 3, 4, 5, 6],
-            showSearch: false
+            showSearch: false,
+            postion: "获取失败"
         };
     },
 
     mounted() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const positionData = position.coords;
+                const { longitude, latitude } = positionData;
+                // alert(latitude);
+                getCurrentCity({
+                    location: `${longitude},${latitude}`,
+                    ak: "vYATQ8UrSFjpqTcWRbkfwgDZ7KwcgkzS",
+                    coordtype: "wgs84ll"
+                }).then(res => {
+                    // alert(res.recommendstops.name);
+                    if (res.data.status === 0) {
+                        this.postion = res.data.recommendStops[0].name;
+                    }
+                });
+            });
+        }
         window.addEventListener("scroll", this.handleScroll);
+    },
+    components: {
+        FoodPartition,
+        FootNav
     },
     computed: {
         ...mapState(["userInfo"])
@@ -81,10 +108,9 @@ export default {
     padding: 0.8rem;
     z-index: 100;
     .title {
+        font-size: 0.9rem;
+        color: #333;
         @include fj();
-    }
-    span {
-        color: #fff;
     }
 }
 .supermarket-card {
@@ -92,13 +118,13 @@ export default {
     padding: 1rem;
     border-bottom: 1px solid #ddd;
 }
-.title-tip {
+.local-tip {
     font-size: 0.6rem;
     color: #fff;
     text-align: left;
 }
 .search-food {
-    background: $blue;
+    background: #f9d675;
     padding: 0.8rem;
     position: relative;
     .center {
