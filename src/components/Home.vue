@@ -11,9 +11,9 @@
                 />
             </div>
         </section>
-        <section class="mt20">
+        <section class="main">
             <div class="search-food">
-                <span class="local-tip">{{postion}}></span>
+                <span class="local-tip" @click='gotoSelectPostion'>{{postion}}></span>
                 <div class="center">
                     <input id="search-input" @focus="gotoSearch" placeholder="输入商家、商品名称" />
                 </div>
@@ -28,8 +28,7 @@
 import { mapState } from "vuex";
 import { getCurrentCity, transformPostion } from "../service/api";
 import FoodPartition from "./FoodPartition";
-import FootNav from "./FootNav";
-import { constants } from "fs";
+import FootNav from "./common/FootNav";
 export default {
     data() {
         return {
@@ -71,6 +70,9 @@ export default {
         gotoSearch() {
             this.$router.push("/search/geohash");
         },
+        gotoSelectPostion(){
+            this.$router.push("/selectPostion");
+        },
         handleScroll() {
             let scrollTop =
                 window.pageYOffset ||
@@ -90,8 +92,9 @@ export default {
 </script>
 <style  lang="scss" scoped>
 @import "../style/mixin";
-.mt20 {
+.main {
     margin-top: 2.8rem;
+    margin-bottom: 2rem;
 }
 .top-search {
     text-align: center;

@@ -35,7 +35,7 @@ export default {
 };
 </script>
 <style  lang="scss" scoped>
-@import "../style/mixin";
+@import "../../style/mixin";
 .foot-nav{
     display: flex;
     position: fixed;

@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import './config/rem'
 import FastClick from 'fastclick'
+import ElementUI from 'element-ui'
 
 if ('addEventListener' in document) {
     document.addEventListener('DOMContentLoaded', function() {
@@ -13,7 +14,8 @@ if ('addEventListener' in document) {
     }, false);
 }
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+Vue.use(ElementUI);
 
 /* eslint-disable no-new */
 new Vue({
