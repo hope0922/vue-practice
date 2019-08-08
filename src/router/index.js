@@ -24,7 +24,7 @@ export default new Router({
         },
         //选择地址
         {
-          path: '/selectPostion',
+          path: '/app/selectPostion',
           component: SelectPostion,
         }
       ]

@@ -6,11 +6,24 @@ import {
 } from './mutationTypes.js'
 
 export default {
-	async getPostion({
+	getPostion({
 		commit,
 		state
 	}) {
-		let res = await getCurrentCity();
-		commit(GET_CURRENT_POSTION, res)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                const positionData = position.coords;
+                const { longitude, latitude } = positionData;
+                getCurrentCity({
+                    location: `${longitude},${latitude}`,
+                    ak: "vYATQ8UrSFjpqTcWRbkfwgDZ7KwcgkzS",
+                    coordtype: "wgs84ll"
+                }).then(res => {
+                    if (res.data.status === 0) {
+                        commit(GET_CURRENT_POSTION, res.data.recommendStops[0].name)
+                    }
+                });
+            });
+        }
 	}
 }

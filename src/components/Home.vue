@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="root">
         <section class="head-area">
             <div class="title">
                 <span>美团外卖</span>
@@ -13,7 +13,7 @@
         </section>
         <section class="main">
             <div class="search-food">
-                <span class="local-tip" @click='gotoSelectPostion'>{{postion}}></span>
+                <span class="local-tip" @click="gotoSelectPostion">{{postionStr}}></span>
                 <div class="center">
                     <input id="search-input" @focus="gotoSearch" placeholder="输入商家、商品名称" />
                 </div>
@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { getCurrentCity, transformPostion } from "../service/api";
 import FoodPartition from "./FoodPartition";
 import FootNav from "./common/FootNav";
@@ -33,29 +33,12 @@ export default {
     data() {
         return {
             foodList: [1, 2, 3, 4, 5, 6],
-            showSearch: false,
-            postion: "获取失败"
+            showSearch: false
         };
     },
 
     mounted() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                const positionData = position.coords;
-                const { longitude, latitude } = positionData;
-                // alert(latitude);
-                getCurrentCity({
-                    location: `${longitude},${latitude}`,
-                    ak: "vYATQ8UrSFjpqTcWRbkfwgDZ7KwcgkzS",
-                    coordtype: "wgs84ll"
-                }).then(res => {
-                    // alert(res.recommendstops.name);
-                    if (res.data.status === 0) {
-                        this.postion = res.data.recommendStops[0].name;
-                    }
-                });
-            });
-        }
+        this.getPostion();
         window.addEventListener("scroll", this.handleScroll);
     },
     components: {
@@ -63,15 +46,16 @@ export default {
         FootNav
     },
     computed: {
-        ...mapState(["userInfo"])
+        ...mapState(["userInfo", "postionStr"])
     },
 
     methods: {
+        ...mapActions(["getPostion"]),
         gotoSearch() {
             this.$router.push("/search/geohash");
         },
-        gotoSelectPostion(){
-            this.$router.push("/selectPostion");
+        gotoSelectPostion() {
+            this.$router.push("/app/selectPostion");
         },
         handleScroll() {
             let scrollTop =
@@ -85,13 +69,15 @@ export default {
                 ) *
                     2;
             this.showSearch = scrollTop == offsetTop || scrollTop > offsetTop;
-            console.log(this.userInfo);
         }
     }
 };
 </script>
 <style  lang="scss" scoped>
 @import "../style/mixin";
+.root{
+    background: #fff;
+}
 .main {
     margin-top: 2.8rem;
     margin-bottom: 2rem;
@@ -127,7 +113,7 @@ export default {
     text-align: left;
 }
 .search-food {
-    background: #f9d675;
+    background: $yellow;
     padding: 0.8rem;
     position: relative;
     .center {

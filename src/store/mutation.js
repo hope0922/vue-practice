@@ -3,7 +3,7 @@ import {
 } from './mutationTypes.js'
 
 export default {
-    [GET_CURRENT_POSTION](state,postion){
-        state.postionStr = postion.data.recommendStops[0].name;
+    [GET_CURRENT_POSTION](state,postionStr){
+        state.postionStr = postionStr;
     }
 }

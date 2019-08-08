@@ -1,25 +1,58 @@
 <template>
     <div id="app">
         <!-- 过度动画 -->
-        <transition name="fade">
-            <router-view />
+        <transition :name="transitionName">
+            <router-view></router-view>
         </transition>
     </div>
 </template>
 
 <script>
 export default {
-    name: "App"
+    name: "App",
+    data() {
+        return {
+            transitionName: ""
+        };
+    },
+    watch: {
+        $route(to, from) {
+            const toDepth = to.path.split("/").length;
+            const fromDepth = from.path.split("/").length;
+            this.transitionName =
+                toDepth < fromDepth ? "slide-right" : "slide-left";
+        }
+    }
 };
 </script>
 
 <style lang="scss">
 @import "./style/common.scss";
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
+// #app {
+//     background: #fff;
+// }
+.slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+    will-change: transform;
+    transition: all 0.2s;
+    position: absolute;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.slide-right-enter {
     opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+}
+.slide-right-leave-active {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
+.slide-left-enter {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
+.slide-left-leave-active {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
 }
 </style>
