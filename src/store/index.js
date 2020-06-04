@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     state:{
         userInfo:'2212121',
         postionStr:'获取失败',
+        loading:false
     },
     actions,
     mutations

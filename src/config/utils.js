@@ -1,6 +1,7 @@
 import Message from 'element-ui';
 import axios from 'axios';
-import qs from 'qs'
+import qs from 'qs';
+import store from '../store'
 
 const API_URL = '';
 
@@ -13,6 +14,7 @@ var instance = axios.create({
 
 //拦截器校验转换参数
 instance.interceptors.request.use(config => {
+    store.dispatch('setLoading');
     config.method === 'post'
         ? config.data = qs.stringify({ ...config.data })
         : config.params = { ...config.params };
@@ -35,6 +37,7 @@ instance.interceptors.response.use(
         //         }
         //     });
         // }
+        store.dispatch('setLoading');
         return response;
     },
     error => {

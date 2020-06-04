@@ -1,1 +1,2 @@
 export const GET_CURRENT_POSTION = 'GET_CURRENT_POSTION'
+export const SET_LOADING = 'SET_LOADING'

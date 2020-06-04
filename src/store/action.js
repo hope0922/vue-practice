@@ -2,7 +2,7 @@ import {
 	getCurrentCity
 } from '../service/api'
 import {
-	GET_CURRENT_POSTION
+	GET_CURRENT_POSTION, SET_LOADING
 } from './mutationTypes.js'
 
 export default {
@@ -23,7 +23,13 @@ export default {
                         commit(GET_CURRENT_POSTION, res.data.recommendStops[0].name)
                     }
                 });
-            });
+            },error=>console.log(error.message));
         }
-	}
+    },
+    setLoading({        
+        commit,
+        state
+    }){
+        commit(SET_LOADING, !this.state.loading)
+    }
 }

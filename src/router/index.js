@@ -3,6 +3,8 @@ import App from '../App'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import SelectPostion from '@/components/SelectPostion'
+import MySetting from '@/page/MySetting'
+import SelectFood from '@/page/SelectFood'
 
 Vue.use(Router)
 
@@ -26,6 +28,16 @@ export default new Router({
         {
           path: '/app/selectPostion',
           component: SelectPostion,
+        },
+        //我的
+        {
+          path: '/app/me',
+          component: MySetting,
+        },
+        //选择菜单
+        {
+          path: '/app/selectFood',
+          component: SelectFood,
         }
       ]
     }

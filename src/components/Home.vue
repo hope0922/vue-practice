@@ -4,7 +4,7 @@
             <div class="title">
                 <span>美团外卖</span>
                 <input
-                    v-if="showSearch"
+                    v-show="showSearch"
                     class="top-search"
                     @focus="gotoSearch"
                     placeholder="输入商家、商品名称"
@@ -13,13 +13,16 @@
         </section>
         <section class="main">
             <div class="search-food">
-                <span class="local-tip" @click="gotoSelectPostion">{{postionStr}}></span>
+                <span
+                    class="local-tip"
+                    @click="gotoSelectPostion"
+                >{{loading?'加载中....':`${postionStr}>`}}</span>
                 <div class="center">
                     <input id="search-input" @focus="gotoSearch" placeholder="输入商家、商品名称" />
                 </div>
             </div>
             <FoodPartition></FoodPartition>
-            <div class="supermarket-card" v-for="(item,index) in foodList" :key="index">321312</div>
+            <div class="supermarket-card" v-for="(item,index) in foodList" :key="index" @click='gotoSelectFood'>321312</div>
         </section>
         <FootNav></FootNav>
     </div>
@@ -39,6 +42,7 @@ export default {
 
     mounted() {
         this.getPostion();
+        // this.setLoading();
         window.addEventListener("scroll", this.handleScroll);
     },
     components: {
@@ -46,16 +50,19 @@ export default {
         FootNav
     },
     computed: {
-        ...mapState(["userInfo", "postionStr"])
+        ...mapState(["userInfo", "postionStr", "loading"])
     },
 
     methods: {
-        ...mapActions(["getPostion"]),
+        ...mapActions(["getPostion", "setLoading"]),
         gotoSearch() {
             this.$router.push("/search/geohash");
         },
         gotoSelectPostion() {
             this.$router.push("/app/selectPostion");
+        },
+        gotoSelectFood(){
+            this.$router.push("/app/selectFood");
         },
         handleScroll() {
             let scrollTop =
@@ -69,13 +76,13 @@ export default {
                 ) *
                     2;
             this.showSearch = scrollTop == offsetTop || scrollTop > offsetTop;
-        }
+        },
     }
 };
 </script>
 <style  lang="scss" scoped>
 @import "../style/mixin";
-.root{
+.root {
     background: #fff;
 }
 .main {

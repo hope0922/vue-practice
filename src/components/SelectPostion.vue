@@ -1,6 +1,6 @@
 <template>
     <div class="root">
-        <Header nav-str="选择收货地址" :is-back="true"></Header>
+        <Header nav-str="选择收货地址" is-back="true"></Header>
         <div class="postion-search">
             <div class="postion-head">
                 <i class="el-icon-location-outline"></i>
