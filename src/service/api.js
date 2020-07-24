@@ -1,4 +1,4 @@
-import API from '../config/utils'
+import API from '../utils/http'
 //获取当前省市
 export const getCurrentCity = (params)=>API.get('/postion/parking/search',{params});
 

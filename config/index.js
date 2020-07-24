@@ -3,6 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+const proxyConfig = require('./proxy')
 
 module.exports = {
   dev: {
@@ -10,16 +11,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/postion': {
-        target: 'http://api.map.baidu.com',//后端接口地址
-        secure:false,
-        changeOrigin: true,//是否允许跨越
-        pathRewrite: {
-            '^/postion': '',//重写,
-        }
-    }
-    },
+    proxyTable: proxyConfig.proxy,
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST

@@ -45,6 +45,9 @@ export default {
         // this.setLoading();
         window.addEventListener("scroll", this.handleScroll);
     },
+    destroyed(){
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     components: {
         FoodPartition,
         FootNav

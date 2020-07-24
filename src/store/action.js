@@ -11,6 +11,15 @@ export default {
 		state
 	}) {
         if (navigator.geolocation) {
+            getCurrentCity({
+                location: `${1},${1}`,
+                ak: "vYATQ8UrSFjpqTcWRbkfwgDZ7KwcgkzS",
+                coordtype: "wgs84ll"
+            }).then(res => {
+                if (res.data.status === 0) {
+                    commit(GET_CURRENT_POSTION, res.data.recommendStops[0].name)
+                }
+            });
             navigator.geolocation.getCurrentPosition(position => {
                 const positionData = position.coords;
                 const { longitude, latitude } = positionData;

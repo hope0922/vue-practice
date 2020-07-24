@@ -6,14 +6,14 @@
         <section>
             <div class="top-header">
                 <span>点餐</span>
-                                <span>套餐</span>
+                <span>套餐</span>
             </div>
             <div class="main-menu">
                 <ul class="left-menu">
-                    <li v-for="(category,index) of categoryList" :key=index>1123</li>
+                    <li v-for="(category,index) of categoryList" :key="index">1123</li>
                 </ul>
                 <ul class="right-menu">
-                    <li v-for="(food,index) of foodList" :key=index>222</li>
+                    <li v-for="(food,index) of foodList" :key="index">222</li>
                 </ul>
             </div>
         </section>
@@ -25,8 +25,8 @@ export default {
     name: "",
     data() {
         return {
-            categoryList:[1,2,3,4,5],
-            foodList:[1,2,3,4,5]
+            categoryList: [1, 2, 3, 4, 5],
+            foodList: [1, 2, 3, 4, 5]
         };
     },
     props: {},
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main-menu{
+.main-menu {
     display: flex;
     flex-direction: row;
     width: 100%;

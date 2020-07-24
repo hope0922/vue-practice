@@ -1,11 +1,11 @@
-import Message from 'element-ui';
+import { Message } from 'element-ui';
 import axios from 'axios';
 import qs from 'qs';
 import store from '../store'
 
 const API_URL = '';
 
-var instance = axios.create({
+let instance = axios.create({
     baseURL: API_URL,
     withCredentials: true,
     timeout: 10000,
@@ -18,7 +18,7 @@ instance.interceptors.request.use(config => {
     config.method === 'post'
         ? config.data = qs.stringify({ ...config.data })
         : config.params = { ...config.params };
-    instance.defaults.headers.post['Content-Type'] = 'application/josn';
+    instance.defaults.headers.post['Content-Type'] = 'application/josn;charset=UTF-8';
     instance.defaults.headers.post["Cache-Control"] = "no-cache";
     return config;
 }, error => {  //请求错误处理
